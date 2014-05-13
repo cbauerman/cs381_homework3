@@ -1,5 +1,9 @@
+{--
+    Homework 3 - Caleb Bauermeister
+--}
+
 ------------------------------------
--- Homework 3 - Caleb Bauermeister
+-- Exercise 1
 ------------------------------------
 
 type Prog = [Cmd]
@@ -21,7 +25,7 @@ type CmdRank = (Int, Int)
 rankC :: Cmd -> CmdRank
 rankC ADD     = (2, 1)
 rankC MULT    = (2, 1)
-rankC DUP     = (0, 1)
+rankC DUP     = (1, 2)
 rankC INC     = (1, 1)
 rankC SWAP    = (2, 2)
 rankC (LD _)  = (0, 1)
@@ -82,8 +86,19 @@ semStatTC xs x | rankSafe xs = Just (sem xs x)
 -- Tests
 
 -- Success
-run1_c1 = semStatTC [LD 3, LD 5, ADD]
+run1_c1 = semStatTC [LD 3, LD 5, ADD] []
+run1_c2 = semStatTC [LD 3, LD 5, MULT] []
+run1_c3 = semStatTC [LD 3, DUP] []
+run1_c4 = semStatTC [LD 3, INC] []
+run1_c5 = semStatTC [LD 3, LD 5, SWAP] []
+run1_c6 = semStatTC [LD 3, DUP, DUP, DUP, POP 2 ] []
+run1_c7 = semStatTC [] []
 
---Errors
-run1_e1 = semStatTC [LD 3, ADD]
+--Errors (returns Nothing)
+run1_e1 = semStatTC [LD 3, ADD] []
+run1_e2 = semStatTC [LD 3, MULT] []
+run1_e3 = semStatTC [DUP] []
+run1_e4 = semStatTC [INC] []
+run1_e5 = semStatTC [LD 3, SWAP] []
+run1_e6 = semStatTC [LD 3, POP 8] []
 
